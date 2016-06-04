@@ -22,7 +22,7 @@ const Canvas = (function () {
             this.size.height
         );
     };
-
+    
     const _canvas = function (id, size) {
         this.element = document.createElement("canvas");
         if (id)
