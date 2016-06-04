@@ -34,7 +34,7 @@ gulp.task('clean', function () {
 gulp.task('uglify', ['clean'], function () {
     const gamifyjs = gulp.src(_paths).pipe(concat('gamify.js'));
     return gamifyjs
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(gulp.dest('dist/'));
 });
 

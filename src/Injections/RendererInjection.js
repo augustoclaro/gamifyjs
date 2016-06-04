@@ -1,6 +1,6 @@
 const RendererInjection = function (game) {
     var rendererObj = this;
-    rendererObj.getContext = function(){
+    rendererObj.getContext = function () {
         return game.renderer.getContext();
     };
     rendererObj.renderCircle = function (destPos, radius, color) {
@@ -9,6 +9,18 @@ const RendererInjection = function (game) {
         _ctx.fillStyle = color;
         _ctx.arc(destPos.x, destPos.y, radius, 0, 2 * Math.PI, false);
         _ctx.fill();
+        _ctx.closePath();
+    };
+    rendererObj.renderLine = function (from, to, lineWidth, color) {
+        const _ctx = rendererObj.getContext();
+        _ctx.beginPath();
+        if (color)
+            _ctx.strokeStyle = color;
+        if (lineWidth)
+            _ctx.lineWidth = lineWidth;
+        _ctx.moveTo(from.x, from.y);
+        _ctx.lineTo(to.x, to.y);
+        _ctx.stroke();
         _ctx.closePath();
     };
 
@@ -28,23 +40,23 @@ const RendererInjection = function (game) {
         _ctx.translate(centerPoint.x, centerPoint.y);
         _ctx.rotate(rad);
         _ctx.drawImage(img,
-                          offset.x,
-                          offset.y,
-                          offset.width,
-                          offset.height,
-                          size.width / 2 * -1,
-                          size.height / 2 * -1,
-                          size.width,
-                          size.height);
+            offset.x,
+            offset.y,
+            offset.width,
+            offset.height,
+            size.width / 2 * -1,
+            size.height / 2 * -1,
+            size.width,
+            size.height);
         _ctx.rotate(rad * -1);
         _ctx.translate(centerPoint.x * -1, centerPoint.y * -1);
     };
-    
-    const _getCenterPoint = function(pos, size){
+
+    const _getCenterPoint = function (pos, size) {
         return {
-          x: pos.x + size.width / 2,
-          y: pos.y + size.height / 2  
-        };  
+            x: pos.x + size.width / 2,
+            y: pos.y + size.height / 2
+        };
     };
 
     rendererObj.renderSprite = function (spriteSheet, spriteName, destPos, destSize, fromCenter) {
@@ -59,13 +71,13 @@ const RendererInjection = function (game) {
             width: _offset.width
         };
         const centerPoint = fromCenter ?
-                        destPos : $pos.getCenterPoint(destPos, destSize);
+            destPos : $pos.getCenterPoint(destPos, destSize);
         _drawImageFromCenterPoint(spriteSheet.getImage(), centerPoint,
-                                    _offset, destSize,
-                                    (_offset.rotate || 0) + (destPos.rotate || 0));
+            _offset, destSize,
+            (_offset.rotate || 0) + (destPos.rotate || 0));
     };
-    
-    rendererObj.renderText = function(text, opt){
+
+    rendererObj.renderText = function (text, opt) {
         const _ctx = rendererObj.getContext();
         if (opt.font)
             _ctx.font = opt.font;
@@ -76,6 +88,6 @@ const RendererInjection = function (game) {
         var maxWidth;
         if (opt.maxWidth)
             maxWidth = opt.maxWidth;
-        _ctx.fillText(text, opt.pos.x,opt.pos.y, maxWidth);
+        _ctx.fillText(text, opt.pos.x, opt.pos.y, maxWidth);
     };
 };

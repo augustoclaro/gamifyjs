@@ -145,6 +145,8 @@ const Game = (function (consts,
                 state = _states[data];
             if (!state)
                 throw "Could not find state " + data;
+            if (gameObj.inputManager)
+                gameObj.inputManager.clearInput();
             _moduleManager.clear();
             gameObj.animations = [];
             gameObj.collisionWatchs = {};
@@ -154,43 +156,43 @@ const Game = (function (consts,
         var gameLoop;
         gameObj.animations = [];
         const _timer = new FrameTimer();
-        const _updateAnimations = function(renderer){
-            gameObj.animations = gameObj.animations.filter(function(anim){
+        const _updateAnimations = function (renderer) {
+            gameObj.animations = gameObj.animations.filter(function (anim) {
                 return anim.animating;
             });
-            gameObj.animations.forEach(function(anim){
+            gameObj.animations.forEach(function (anim) {
                 anim.animate(renderer, _timer.getElapsedTicks());
             });
         };
         const _getContainerInstance = function (k) {
             return _container[k];
         };
-        
+
         gameObj.collisionWatchs = {};
-        const _checkForCollisions = function(){
+        const _checkForCollisions = function () {
             _.allValues(gameObj.collisionWatchs)
-            .forEach(function(watch){
-               const arrModules1 = []; 
-               const arrModules2 = []; 
-               watch.modules1.forEach(function(mod){
-                   if (typeof mod === "string")
-                        _.pushMany(arrModules1, _moduleManager.getByType(mod));
-                    else arrModules1.push(mod);
-               });
-               watch.modules2.forEach(function(mod){
-                   if (typeof mod === "string")
-                        _.pushMany(arrModules2, _moduleManager.getByType(mod));
-                    else arrModules2.push(mod);
-               });
-               arrModules1.forEach(function(mod1){  
-                    arrModules2.forEach(function(mod2){
-                        if (mod1.loaded &&
-                            mod2.loaded  &&
-                            _.boxCollision(_.box(mod1), _.box(mod2)))
-                            watch.callback(mod1, mod2);
+                .forEach(function (watch) {
+                    const arrModules1 = [];
+                    const arrModules2 = [];
+                    watch.modules1.forEach(function (mod) {
+                        if (typeof mod === "string")
+                            _.pushMany(arrModules1, _moduleManager.getByType(mod));
+                        else arrModules1.push(mod);
                     });
-               });
-            });
+                    watch.modules2.forEach(function (mod) {
+                        if (typeof mod === "string")
+                            _.pushMany(arrModules2, _moduleManager.getByType(mod));
+                        else arrModules2.push(mod);
+                    });
+                    arrModules1.forEach(function (mod1) {
+                        arrModules2.forEach(function (mod2) {
+                            if (mod1.loaded &&
+                                mod2.loaded &&
+                                _.boxCollision(_.box(mod1), _.box(mod2)))
+                                watch.callback(mod1, mod2);
+                        });
+                    });
+                });
         };
         var _stateLoading = false;
         const _startLoop = function () {
@@ -199,8 +201,8 @@ const Game = (function (consts,
             gameObj.inputManager.checkForInput();
             _timer.tick();
             gameLoop = new GameLoop(_config.fps, function (elapsedTime) {
-                const _continue = function(){
-                    _currentState.update(function(){
+                const _continue = function () {
+                    _currentState.update(function () {
                         gameObj.renderer.render(function () {
                             _checkForCollisions();
                             _moduleManager.renderAll();
@@ -209,12 +211,12 @@ const Game = (function (consts,
                         });
                     });
                 };
-                if (_currentState.loaded){
+                if (_currentState.loaded) {
                     if (!_stateLoading)
                         _continue();
-                }else {
+                } else {
                     _stateLoading = _currentState.loaded = true;
-                    _currentState.load(function(){
+                    _currentState.load(function () {
                         _stateLoading = false;
                     });
                 }
