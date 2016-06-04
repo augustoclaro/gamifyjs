@@ -1,11 +1,7 @@
-const GameInjection = (function (TimedFunction) {
+const GameInjection = (function () {
     return function (game) {
-        var timedFunction = new TimedFunction();
         this.getConfig = function () {
             return game.config;
         };
-        this.createTimedFunction = function (action, interval) {
-            return timedFunction.create(action, interval);
-        };
     };
-})(TimedFunction);
+})();

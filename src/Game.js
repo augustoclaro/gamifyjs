@@ -15,6 +15,7 @@ const Game = (function (consts,
     GameInjection,
     ModuleInjection,
     RendererInjection,
+    TimedFunctionInjection,
     _) {
     const oGame = function (name, config, inheritGames) {
         var gameObj = this;
@@ -116,6 +117,7 @@ const Game = (function (consts,
             _container.$animation = new AnimationInjection(gameObj);
             _container.$collision = new CollisionInjection(gameObj);
             _container.$state = new StateInjection(gameObj);
+            _container.$timedFunction = new TimedFunctionInjection();
             _container.$pos = new PosInjection();
             _container.$keys = consts.keys;
             _.allValues(_services).forEach(_instantiate);
@@ -260,4 +262,5 @@ const Game = (function (consts,
     GameInjection,
     ModuleInjection,
     RendererInjection,
+    TimedFunctionInjection,
     Utils);

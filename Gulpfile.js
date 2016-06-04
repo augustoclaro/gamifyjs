@@ -27,18 +27,15 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['dist/', 'app/js/gamify.js'])
+    return gulp.src('dist/')
         .pipe(clean());
 });
 
 gulp.task('uglify', ['clean'], function () {
     const gamifyjs = gulp.src(_paths).pipe(concat('gamify.js'));
     return gamifyjs
-        .pipe(uglify().on('error', function(err){
-            console.log(err);
-        }))
-        .pipe(gulp.dest('dist/'))
-        .pipe(gulp.dest('app/js'));
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('default', ['jshint', 'uglify'], function () {
