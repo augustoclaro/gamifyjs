@@ -4,12 +4,22 @@ const Renderer = function (canvasGame, canvasBuffer) {
     if (!canvasBuffer)
         throw "No buffer canvas found.";
     const _ctx = canvasBuffer.getContext();
-    this.getContext = function () {
-        return _ctx;
+    const _layers = [];
+    this.getContext = function (layer) {
+        if (_layers.length <= layer)
+            for (var i = _layers.length; i<=layer; i++)
+                _layers.push(new Canvas("layer-canvas-"+i, canvasGame.size));
+        return _layers[layer].getContext();
     };
     this.render = function (action) {
         canvasBuffer.clear();
+        _layers.forEach(function(canvas){
+            canvas.clear();
+        });
         action();
+        _layers.forEach(function(canvas){
+            canvas.drawTo(canvasBuffer);
+        });
         canvasBuffer.transferTo(canvasGame);
     };
 };

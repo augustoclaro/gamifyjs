@@ -14,7 +14,7 @@ const Animation = (function (_, EventEmitter) {
         var _animated;
         
         const _render = function($renderer){
-            $renderer.renderSprite(_sprideSheet,
+            $renderer.fromLayer(_pos.layer || 0).renderSprite(_sprideSheet,
                                    _frames[animObj.frameIndex].sprite,
                                    _pos,
                                    _size);

@@ -13,6 +13,15 @@ const Canvas = (function () {
         var _imgData = this.context.getImageData(0, 0, this.element.width, this.element.height);
         canvasTo.getContext().putImageData(_imgData, 0, 0, 0, 0, this.element.width, this.element.height);
     };
+    
+    const _drawTo = function(canvasTo){
+        canvasTo.getContext().drawImage(
+            this.getElement(),
+            0, 0,
+            this.size.width,
+            this.size.height
+        );
+    };
 
     const _canvas = function (id, size) {
         this.element = document.createElement("canvas");
@@ -21,12 +30,14 @@ const Canvas = (function () {
         this.element.setAttribute("width", size.width);
         this.element.setAttribute("height", size.height);
         this.context = this.element.getContext("2d");
+        this.size = size;
     };
     _canvas.prototype = {
         clear: _clear,
         getElement: _getElement,
         getContext: _getContext,
-        transferTo: _transferTo
+        transferTo: _transferTo,
+        drawTo: _drawTo
     };
     return _canvas;
 })();
