@@ -21,14 +21,5 @@ const Renderer = function (canvasGame, canvasBuffer) {
             canvas.drawTo(canvasGame);
             canvasGame.getContext().restore();
         });
-        // canvasBuffer.clear();
-        // _layers.forEach(function(canvas){
-        //     canvas.clear();
-        // });
-        // action();
-        // _layers.forEach(function(canvas){
-        //     canvas.drawTo(canvasBuffer);
-        // });
-        // canvasBuffer.transferTo(canvasGame);
     };
 };
