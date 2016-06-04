@@ -1,0 +1,24 @@
+{
+    "esnext": true,
+    "browser": true,
+    "eqeqeq": true,
+    "immed": true,
+    "indent": 2,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "undef": true,
+    "trailing": true,
+    "smarttabs": true,
+    "globals": {
+        "console": true
+    },
+    "predef": [
+        // "Game",
+        // "AssignmentObject",
+        // "GameInjection",
+        // "ModuleInjection",
+        // "RendererInjection",
+        // "Utils"
+    ]
+}

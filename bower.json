@@ -1,0 +1,17 @@
+{
+  "name": "gamifyjs",
+  "description": "Simple javascript game engine to simplify creating games",
+  "main": "dist/gamify.js",
+  "authors": [
+    "Augusto Claro"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
