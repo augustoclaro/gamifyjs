@@ -21,9 +21,6 @@ const ModuleManager = (function (asyncLoop) {
         }, cb);
     };
     const _renderAll = function () {
-        // console.log(_modules.filter(function(m){
-        //     return m.type === "playerModule";
-        // }));
         _modules.forEach(function (m) {
             if (m.loaded){
                 m.update();

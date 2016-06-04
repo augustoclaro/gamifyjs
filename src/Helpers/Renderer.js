@@ -3,6 +3,7 @@ const Renderer = function (canvasGame, canvasBuffer) {
         throw "No game canvas found.";
     if (!canvasBuffer)
         throw "No buffer canvas found.";
+    this.canvasGame = canvasGame;
     const _ctx = canvasBuffer.getContext();
     const _layers = [];
     this.getContext = function (layer) {
